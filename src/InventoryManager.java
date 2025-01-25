@@ -2,9 +2,11 @@ import java.io.*;
 import java.util.*;
 
 public class InventoryManager {
+   // Ensure the file exists
     private static final String FILE_NAME = "/workspaces/npci-advcoding-playground-challenge-3-Divyashivabhavani-Bandari/src/inventory.txt";
-
+    
     public static void main(String[] args) {
+          initializeFile(); 
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("\nInventory Manager");
@@ -92,6 +94,7 @@ public class InventoryManager {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
             while ((line = reader.readLine()) != null) {
+                 
                 String[] parts = line.split(",");
                 if (parts.length == 2) {
                     String itemName = parts[0].trim();
@@ -118,5 +121,21 @@ public class InventoryManager {
         System.out.println("Error writing to inventory file: " + e.getMessage());
     }
 }
+
+public static void initializeFile() {
+    File file = new File(FILE_NAME);
+    try {
+        if (file.exists()) {
+            System.out.println("Inventory file found.");
+        } else {
+            if (file.createNewFile()) {
+                System.out.println("Inventory file not found. Creating a new one...");
+            }
+        }
+    } catch (IOException e) {
+        System.out.println("Error creating inventory file: " + e.getMessage());
+    }
+}
+
 
 }
